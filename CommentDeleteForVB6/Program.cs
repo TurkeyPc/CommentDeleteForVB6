@@ -53,5 +53,35 @@ namespace CommentDeleteForVB6
                 if (t != vvv) yield break;
             }
         }
+
+        public static IEnumerable<List<string>> LogicalRows(IEnumerable<string> s)
+        {
+            var v = new List<string>();
+
+            foreach(var sss in s)
+            {
+                if (sss.Trim() == "") {
+                    if (v.Count > 0)
+                    {
+                        yield return v;
+                        v = new List<string>();
+                    }
+                    continue;
+                }
+
+                if(sss.Reverse().First()!='_')
+                {
+                    v.Add(sss);
+                    yield return v;
+                    v = new List<string>();
+                    continue;
+                }
+
+                v.Add(sss);
+            }
+
+            if (v.Count > 0)
+                yield return v;
+        }
     }
 }

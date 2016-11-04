@@ -96,5 +96,45 @@ namespace UnitTestProject1
             CollectionAssert.AreEqual(expected, actual);
         }
 
+        [TestMethod]
+        public void TestMethod9()
+        {
+            var s = Properties.Resources.TestMethod9InputValue;
+            var ss = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var actual = (Program.LogicalRows(ss)).ToArray();
+
+            Assert.AreEqual(3, actual.Count());
+            Assert.AreEqual(1, actual[0].Count());
+            Assert.AreEqual(2, actual[1].Count());
+            Assert.AreEqual(1, actual[2].Count());
+
+            Assert.AreEqual("Private Sub Form_Load()", actual[0][0]);
+            Assert.AreEqual("'Dim s As Integer _", actual[1][0]);
+            Assert.AreEqual("Dim v As Variant", actual[1][1]);
+            Assert.AreEqual("End Sub", actual[2][0]);
+        }
+
+
+        [TestMethod]
+        public void TestMethodA()
+        {
+            var s = Properties.Resources.TestMethodAInputValue;
+            var ss = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var actual = (Program.LogicalRows(ss)).ToArray();
+
+            Assert.AreEqual(4, actual.Count());
+            Assert.AreEqual(1, actual[0].Count());
+            Assert.AreEqual(1, actual[1].Count());
+            Assert.AreEqual(1, actual[2].Count());
+            Assert.AreEqual(1, actual[3].Count());
+
+            Assert.AreEqual("Private Sub Form_Load()", actual[0][0]);
+            Assert.AreEqual("'Dim s As Integer _", actual[1][0]);
+
+            Assert.AreEqual("Dim v As Variant", actual[2][0]);
+            Assert.AreEqual("End Sub", actual[3][0]);
+        }
     }
 }

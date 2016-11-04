@@ -150,4 +150,21 @@ s = "New Value"</value>
   <data name="TestMethod4InputValue" xml:space="preserve">
     <value>s = "---""I'm a student.""---"</value>
   </data>
+  <data name="TestMethod9InputValue" xml:space="preserve">
+    <value>Private Sub Form_Load()
+
+'Dim s As Integer _
+Dim v As Variant
+
+End Sub</value>
+  </data>
+  <data name="TestMethodAInputValue" xml:space="preserve">
+    <value>Private Sub Form_Load()
+
+'Dim s As Integer _
+
+Dim v As Variant
+
+End Sub</value>
+  </data>
 </root>

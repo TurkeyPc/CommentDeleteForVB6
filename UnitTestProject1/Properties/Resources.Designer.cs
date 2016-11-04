@@ -146,5 +146,34 @@ namespace UnitTestProject1.Properties {
                 return ResourceManager.GetString("TestMethod4InputValue", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Private Sub Form_Load()
+        ///
+        ///&apos;Dim s As Integer _
+        ///Dim v As Variant
+        ///
+        ///End Sub に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TestMethod9InputValue {
+            get {
+                return ResourceManager.GetString("TestMethod9InputValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Private Sub Form_Load()
+        ///
+        ///&apos;Dim s As Integer _
+        ///
+        ///Dim v As Variant
+        ///
+        ///End Sub に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TestMethodAInputValue {
+            get {
+                return ResourceManager.GetString("TestMethodAInputValue", resourceCulture);
+            }
+        }
     }
 }

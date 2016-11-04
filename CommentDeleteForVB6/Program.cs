@@ -40,7 +40,18 @@ namespace CommentDeleteForVB6
             }
 
             return s;
+        }
 
+        public static IEnumerable<string> DeleteComment2(IEnumerable<string> s)
+        {
+            var v = new List<string>(s);
+
+            foreach(var vvv in s)
+            {
+                var t = DeleteComment(vvv);
+                yield return t;
+                if (t != vvv) yield break;
+            }
         }
     }
 }

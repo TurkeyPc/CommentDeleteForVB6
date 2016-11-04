@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CommentDeleteForVB6;
+using System.Linq;
 
 namespace UnitTestProject1
 {
@@ -45,6 +46,18 @@ namespace UnitTestProject1
             var expected = Properties.Resources.TestMethod4ExpectedValue;
 
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestMethod5()
+        {
+            var s = Properties.Resources.String1;
+            var ss = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var expected = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var actual = (Program.DeleteComment2(ss)).ToArray();
+
+            CollectionAssert.AreEqual(expected, actual);
         }
     }
 }

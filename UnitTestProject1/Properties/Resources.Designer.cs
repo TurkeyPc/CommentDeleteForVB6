@@ -61,6 +61,16 @@ namespace UnitTestProject1.Properties {
         }
         
         /// <summary>
+        ///   Dim s As _
+        ///String に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   s = &quot;---I&apos;m a student.---&quot; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TestMethod3ExpectedValue {

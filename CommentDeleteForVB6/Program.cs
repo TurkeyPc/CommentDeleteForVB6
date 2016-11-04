@@ -25,7 +25,7 @@ namespace CommentDeleteForVB6
             if (c == -1)
                 return s;
 
-            if (s.IndexOf("\"") == 0)
+            if (s.IndexOf("\"") == -1)
                 return s.Substring(0, c);
 
             bool InString = false;

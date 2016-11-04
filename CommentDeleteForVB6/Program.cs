@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace CommentDeleteForVB6
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。
@@ -18,8 +18,14 @@ namespace CommentDeleteForVB6
             Application.Run(new Form1());
         }
 
-        static string DeleteComment(string s)
+        public static string DeleteComment(string s)
         {
+            var c = s.IndexOf("'");
+
+            if (c == -1)
+                return s;
+
+            return s.Substring(0,c);
 
         }
     }

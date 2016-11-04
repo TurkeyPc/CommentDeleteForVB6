@@ -25,7 +25,21 @@ namespace CommentDeleteForVB6
             if (c == -1)
                 return s;
 
-            return s.Substring(0,c);
+            if (s.IndexOf("\"") == 0)
+                return s.Substring(0, c);
+
+            bool InString = false;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '"')
+                    InString = !InString;
+
+                if (!InString && s[i] == '\'')
+                    return s.Substring(0, i - 1);
+            }
+
+            return s;
 
         }
     }

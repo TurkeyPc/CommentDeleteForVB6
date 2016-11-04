@@ -28,8 +28,10 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod3()
         {
-            var actual = Program.DeleteComment("s = \"---I'm a student.---\"");
-            var expected = "s = \"---I'm a student.---\"";
+            var s = Properties.Resources.TestMethod3InputValue;
+
+            var actual = Program.DeleteComment(s);
+            var expected = Properties.Resources.TestMethod3ExpectedValue;
 
             Assert.AreEqual(expected, actual);
         }

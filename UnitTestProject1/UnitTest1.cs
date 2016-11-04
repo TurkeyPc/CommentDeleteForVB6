@@ -35,5 +35,16 @@ namespace UnitTestProject1
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void TestMethod4()
+        {
+            var s = Properties.Resources.TestMethod4InputValue;
+
+            var actual = Program.DeleteComment(s);
+            var expected = Properties.Resources.TestMethod4ExpectedValue;
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

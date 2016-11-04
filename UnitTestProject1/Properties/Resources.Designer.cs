@@ -77,5 +77,23 @@ namespace UnitTestProject1.Properties {
                 return ResourceManager.GetString("TestMethod3InputValue", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   s = &quot;---&quot;&quot;I&apos;m a student.&quot;&quot;---&quot; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TestMethod4ExpectedValue {
+            get {
+                return ResourceManager.GetString("TestMethod4ExpectedValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   s = &quot;---&quot;&quot;I&apos;m a student.&quot;&quot;---&quot; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TestMethod4InputValue {
+            get {
+                return ResourceManager.GetString("TestMethod4InputValue", resourceCulture);
+            }
+        }
     }
 }

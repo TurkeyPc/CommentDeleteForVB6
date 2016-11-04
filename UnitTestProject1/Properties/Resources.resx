@@ -123,4 +123,10 @@
   <data name="TestMethod3InputValue" xml:space="preserve">
     <value>s = "---I'm a student.---"</value>
   </data>
+  <data name="TestMethod4ExpectedValue" xml:space="preserve">
+    <value>s = "---""I'm a student.""---"</value>
+  </data>
+  <data name="TestMethod4InputValue" xml:space="preserve">
+    <value>s = "---""I'm a student.""---"</value>
+  </data>
 </root>

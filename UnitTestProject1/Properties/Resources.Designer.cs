@@ -64,9 +64,50 @@ namespace UnitTestProject1.Properties {
         ///   Dim s As _
         ///String に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string String1 {
+        internal static string TestMehtod5InputValue {
             get {
-                return ResourceManager.GetString("String1", resourceCulture);
+                return ResourceManager.GetString("TestMehtod5InputValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dim s As _
+        ///String  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TestMehtod6ExpectedValue {
+            get {
+                return ResourceManager.GetString("TestMehtod6ExpectedValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dim s As _
+        ///String &apos;s Is String に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TestMehtod6InputValue {
+            get {
+                return ResourceManager.GetString("TestMehtod6InputValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   &apos;Dim s As _
+        ///String に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TestMehtod7InputValue {
+            get {
+                return ResourceManager.GetString("TestMehtod7InputValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dim s As _
+        ///String &apos;s Is String _
+        ///s = &quot;New Value&quot; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TestMehtod8InputValue {
+            get {
+                return ResourceManager.GetString("TestMehtod8InputValue", resourceCulture);
             }
         }
         

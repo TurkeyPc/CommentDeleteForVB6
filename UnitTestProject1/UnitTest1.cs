@@ -51,7 +51,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMethod5()
         {
-            var s = Properties.Resources.String1;
+            var s = Properties.Resources.TestMehtod5InputValue;
             var ss = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
             var expected = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
@@ -59,5 +59,42 @@ namespace UnitTestProject1
 
             CollectionAssert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void TestMethod6()
+        {
+            var s = Properties.Resources.TestMehtod6InputValue;
+            var ss = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var actual = (Program.DeleteComment2(ss)).ToArray();
+            var expected =Properties.Resources.TestMehtod6ExpectedValue.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestMethod7()
+        {
+            var s = Properties.Resources.TestMehtod7InputValue;
+            var ss = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var actual = (Program.DeleteComment2(ss)).ToArray();
+            var expected = new[] { "" };
+
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestMethod8()
+        {
+            var s = Properties.Resources.TestMehtod8InputValue;
+            var ss = s.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var actual = (Program.DeleteComment2(ss)).ToArray();
+            var expected =Properties.Resources.TestMehtod6ExpectedValue.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
     }
 }

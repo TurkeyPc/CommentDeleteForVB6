@@ -15,5 +15,16 @@ namespace CommentDeleteForVB6
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog v = new OpenFileDialog();
+
+            if (v.ShowDialog() == DialogResult.OK)
+            {
+                Program.proc(v.FileName);
+            }
+
+        }
     }
 }

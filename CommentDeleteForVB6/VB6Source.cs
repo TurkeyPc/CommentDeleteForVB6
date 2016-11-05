@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Text;
 
 namespace CommentDeleteForVB6
 {
@@ -10,7 +11,7 @@ namespace CommentDeleteForVB6
 
         public VB6Source(string path)
         {
-            this.source = File.ReadAllLines(path);
+            this.source = File.ReadAllLines(path, Encoding.Default);
         }
 
         public VB6Source(IEnumerable<string> source)

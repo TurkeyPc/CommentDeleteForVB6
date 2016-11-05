@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace CommentDeleteForVB6
 {
@@ -22,7 +18,8 @@ namespace CommentDeleteForVB6
 
             if (v.ShowDialog() == DialogResult.OK)
             {
-                Program.proc(v.FileName);
+                var vb6module = new VB6Source(v.FileName);
+                File.WriteAllLines(v.FileName, vb6module.CommentDeleted,Encoding.Default);
             }
 
         }

@@ -24,7 +24,7 @@ namespace CommentDeleteForVB6
             var ss = File.ReadAllLines(path,System.Text.Encoding.Default);
             var sss = LogicalRows(ss).Select(p => DeleteComment2(p));
 
-            File.WriteAllLines(path, PhysicalRows(sss).ToArray(),System.Text.Encoding.Default);
+            File.WriteAllLines(path, PhysicalRows(sss),System.Text.Encoding.Default);
         }
 
         public static string DeleteComment(string s)

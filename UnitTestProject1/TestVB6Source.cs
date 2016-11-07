@@ -24,7 +24,7 @@ namespace UnitTestProject1
         {
             var target = new VB6Source(new string[] { "'    'Dim v As Integer 'v is Integer"});
             var actual = target.CommentDeleted.ToArray();
-            var expected = new[] { "" };
+            var expected = new string[0];
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -108,7 +108,7 @@ namespace UnitTestProject1
 
             var target = new VB6Source(s1.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
             var actual = target.CommentDeleted.ToArray();
-            var expected = new[] { "" };
+            var expected = new string[0];
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -153,12 +153,7 @@ namespace UnitTestProject1
             var actual = target.CommentDeleted.ToArray();
             var expected = new List<string>();
             expected.Add("Private Sub Form_Load()");
-            expected.Add("");
-            expected.Add("");
-            expected.Add("");
             expected.Add("End Sub");
-
-            Assert.AreEqual(5, actual.Count());
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -181,10 +176,7 @@ namespace UnitTestProject1
             var actual = target.CommentDeleted.ToArray();
             var expected = new List<string>();
             expected.Add("Private Sub Form_Load()");
-            expected.Add("");
-            expected.Add("");
             expected.Add("Dim v As Variant");
-            expected.Add("");
             expected.Add("End Sub");
 
             CollectionAssert.AreEqual(expected, actual);

@@ -8,6 +8,7 @@ namespace CommentDeleteForVB6
     public class VB6LogicalRow
     {
         private List<string> mPhysicalRows;
+        private const string ContinueString = " _";
 
         public VB6LogicalRow()
         {
@@ -34,26 +35,48 @@ namespace CommentDeleteForVB6
             get
             {
                 if (Count == 0) return true;
-                return IsContinueRow(mPhysicalRows[mPhysicalRows.Count() - 1]);
+                return IsContinueRow(GetLastItem(mPhysicalRows));
             }
         }
 
         private bool IsContinueRow(string p)
         {
-            if (p.Length < 2) return false;
+            if (p.Length < ContinueString.Length) return false;
 
-            var s = new string(p.Reverse().Take(2).Reverse().ToArray());
-            return s == " _";
+            var s = new string(p.Reverse().Take(ContinueString.Length).Reverse().ToArray());
+            return s == ContinueString;
+        }
+
+        public string GetLastItem(IEnumerable<string> p)
+        {
+            return p.Reverse().FirstOrDefault();
+        }
+
+        private string CutLast(string p,int v)
+        {
+            if (p.Length <= v) return "";
+
+            return p.Substring(0, p.Length - v);
         }
 
         public IEnumerable<string> AliveCode()
         {
-            if (Count > 0)
-                if (mPhysicalRows[Count - 1].Trim() == "")
-                    yield break;
+            var vvv = DeleteComment2(mPhysicalRows).ToList();
 
-            foreach (var item in DeleteComment2(mPhysicalRows))
-                yield return item;
+            if (vvv.Count >= 1)
+                if (GetLastItem(vvv).Trim() == "")
+                    vvv.RemoveAt(vvv.Count - 1);
+
+            if (vvv.Count >= 1)
+            {
+                if (IsContinueRow(GetLastItem(vvv)))
+                {
+                    var lastindex = vvv.Count - 1;
+                    vvv[lastindex] = CutLast(vvv[lastindex], 2);
+                }
+            }
+
+            return vvv;
         }
 
         private static IEnumerable<string> DeleteComment2(IEnumerable<string> s)

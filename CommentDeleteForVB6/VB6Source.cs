@@ -144,8 +144,7 @@ namespace CommentDeleteForVB6
 
             foreach (var sss in source)
             {
-                if (v.CanAddRow)
-                    v.Add(sss);
+                v.Add(sss);
 
                 if (!v.CanAddRow)
                 {

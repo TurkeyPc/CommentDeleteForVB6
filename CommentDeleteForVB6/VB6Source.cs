@@ -63,23 +63,18 @@ namespace CommentDeleteForVB6
             }
         }
 
+        public IEnumerable<List<string>> LogicalRows()
+        {
+            return LogicalRows(source);
+        }
+
         private static IEnumerable<List<string>> LogicalRows(IEnumerable<string> s)
         {
             var v = new List<string>();
 
             foreach (var sss in s)
             {
-                if (sss.Trim() == "")
-                {
-                    if (v.Count > 0)
-                    {
-                        yield return v;
-                        v = new List<string>();
-                    }
-                    continue;
-                }
-
-                if (sss.Reverse().First() != '_')
+                if (new string(sss.Reverse().Take(2).Reverse().ToArray()) != " _")
                 {
                     v.Add(sss);
                     yield return v;
@@ -96,9 +91,11 @@ namespace CommentDeleteForVB6
 
         private static IEnumerable<string> PhysicalRows(IEnumerable<IEnumerable<string>> s)
         {
-            foreach (var ie in s)
-                foreach (var item in ie)
-                    yield return item;
+            foreach (var logicalrow in s)
+            {
+                foreach (var physicalrow in logicalrow)
+                    yield return physicalrow;
+            }
         }
     }
 }

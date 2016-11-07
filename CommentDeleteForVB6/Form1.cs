@@ -26,12 +26,13 @@ namespace CommentDeleteForVB6
                 return;
 
             DoDeleteComent(v.FileName);
+            MessageBox.Show("Done");
         }
 
         private static void DoDeleteComent(string s)
         {
             var vb6module = new VB6Source(s);
-            File.WriteAllLines(s, vb6module.CommentDeleted.Where(p => p.Trim() != ""), Encoding.Default);
+            File.WriteAllLines(s, vb6module.CommentDeleted, Encoding.Default);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -55,6 +56,7 @@ namespace CommentDeleteForVB6
                 }
 
             }
+            MessageBox.Show("Done");
         }
 
     }

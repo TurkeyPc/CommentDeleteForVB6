@@ -154,7 +154,11 @@ namespace UnitTestProject1
             var expected = new List<string>();
             expected.Add("Private Sub Form_Load()");
             expected.Add("");
+            expected.Add("");
+            expected.Add("");
             expected.Add("End Sub");
+
+            Assert.AreEqual(5, actual.Count());
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -178,8 +182,54 @@ namespace UnitTestProject1
             var expected = new List<string>();
             expected.Add("Private Sub Form_Load()");
             expected.Add("");
+            expected.Add("");
             expected.Add("Dim v As Variant");
+            expected.Add("");
             expected.Add("End Sub");
+
+            CollectionAssert.AreEqual(expected, actual);
+        }
+
+
+        [TestMethod]
+        public void TestRealVB6Method2a()
+        {
+            var s1 = new List<string>();
+            s1.Add("Private Sub Form_Load()");
+            s1.Add("");
+            s1.Add("'Dim s As Integer _");
+            s1.Add("");
+            s1.Add("Dim v As Variant");
+            s1.Add("");
+            s1.Add("End Sub");
+
+            var target = new VB6Source(s1);
+            var actual = target.LogicalRows();
+
+            Assert.AreEqual(6, actual.Count());
+
+            var expected = new List<string>();
+
+            expected.Clear();
+            expected.Add("Private Sub Form_Load()");
+            CollectionAssert.AreEqual(expected, actual.ToArray()[0]);
+        }
+
+
+        [TestMethod]
+        public void TestRealVB6Method3()
+        {
+            var s1 = new List<string>();
+            s1.Add("For i = 0 To 10");
+            s1.Add("    Debug.Print CStr(i) 'OK_");
+            s1.Add("Next i");
+
+            var target = new VB6Source(s1);
+            var actual = target.CommentDeleted.ToArray();
+            var expected = new List<string>();
+            expected.Add("For i = 0 To 10");
+            expected.Add("    Debug.Print CStr(i) ");
+            expected.Add("Next i");
 
             CollectionAssert.AreEqual(expected, actual);
         }

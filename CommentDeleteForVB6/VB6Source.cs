@@ -29,9 +29,43 @@ namespace CommentDeleteForVB6
             get { return mPhysicalRows.Count(); }
         }
 
+        public bool CanAddRow
+        {
+            get
+            {
+                if (Count == 0) return true;
+                return IsContinueRow(mPhysicalRows[mPhysicalRows.Count() - 1]);
+            }
+        }
+
+        private bool IsContinueRow(string p)
+        {
+            if (p.Length < 2) return false;
+
+            var s = new string(p.Reverse().Take(2).Reverse().ToArray());
+            return s == " _";
+        }
+
         public IEnumerable<string> AliveCode()
         {
-            return DeleteComment2(mPhysicalRows);
+            if (Count > 0)
+                if (mPhysicalRows[Count - 1].Trim() == "")
+                    yield break;
+
+            foreach (var item in DeleteComment2(mPhysicalRows))
+                yield return item;
+        }
+
+        private static IEnumerable<string> DeleteComment2(IEnumerable<string> s)
+        {
+            var v = new List<string>(s);
+
+            foreach (var vvv in s)
+            {
+                var t = DeleteComment(vvv);
+                yield return t;
+                if (t != vvv) yield break;
+            }
         }
 
         private static string DeleteComment(string s)
@@ -57,19 +91,6 @@ namespace CommentDeleteForVB6
 
             return s;
         }
-
-        private static IEnumerable<string> DeleteComment2(IEnumerable<string> s)
-        {
-            var v = new List<string>(s);
-
-            foreach (var vvv in s)
-            {
-                var t = DeleteComment(vvv);
-                yield return t;
-                if (t != vvv) yield break;
-            }
-        }
-
     }
 
     public class VB6Source
@@ -90,37 +111,31 @@ namespace CommentDeleteForVB6
         {
             get
             {
-                return PhysicalRows(LogicalRows(source));
+                return PhysicalRows(LogicalRows());
             }
         }
 
-        public IEnumerable<VB6LogicalRow> LogicalRows()
-        {
-            return LogicalRows(source);
-        }
-
-        private static IEnumerable<VB6LogicalRow> LogicalRows(IEnumerable<string> s)
+        private IEnumerable<VB6LogicalRow> LogicalRows()
         {
             var v = new VB6LogicalRow();
 
-            foreach (var sss in s)
+            foreach (var sss in source)
             {
-                if (new string(sss.Reverse().Take(2).Reverse().ToArray()) != " _")
-                {
+                if (v.CanAddRow)
                     v.Add(sss);
+
+                if (!v.CanAddRow)
+                {
                     yield return v;
                     v = new VB6LogicalRow();
-                    continue;
                 }
-
-                v.Add(sss);
             }
 
             if (v.Count > 0)
                 yield return v;
         }
 
-        private static IEnumerable<string> PhysicalRows(IEnumerable<VB6LogicalRow> s)
+        private IEnumerable<string> PhysicalRows(IEnumerable<VB6LogicalRow> s)
         {
             foreach (var logicalrow in s)
                 foreach (var physicalrow in logicalrow.AliveCode())

@@ -189,32 +189,7 @@ namespace UnitTestProject1
 
             CollectionAssert.AreEqual(expected, actual);
         }
-
-
-        [TestMethod]
-        public void TestRealVB6Method2a()
-        {
-            var s1 = new List<string>();
-            s1.Add("Private Sub Form_Load()");
-            s1.Add("");
-            s1.Add("'Dim s As Integer _");
-            s1.Add("");
-            s1.Add("Dim v As Variant");
-            s1.Add("");
-            s1.Add("End Sub");
-
-            var target = new VB6Source(s1);
-            var actual = target.LogicalRows();
-
-            Assert.AreEqual(6, actual.Count());
-
-            var expected = new List<string>();
-
-            expected.Clear();
-            expected.Add("Private Sub Form_Load()");
-            CollectionAssert.AreEqual(expected, actual.ToArray()[0]);
-        }
-
+        
 
         [TestMethod]
         public void TestRealVB6Method3()

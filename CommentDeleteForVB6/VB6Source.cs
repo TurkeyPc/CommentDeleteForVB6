@@ -5,26 +5,33 @@ using System.Text;
 
 namespace CommentDeleteForVB6
 {
-    public class VB6Source
+    public class VB6LogicalRow
     {
-        private readonly string[] source;
+        private List<string> mPhysicalRows;
 
-        public VB6Source(string path)
+        public VB6LogicalRow()
         {
-            this.source = File.ReadAllLines(path, Encoding.Default);
+            mPhysicalRows = new List<string>();
         }
 
-        public VB6Source(IEnumerable<string> source)
+        public void Add(string row)
         {
-            this.source = source.ToArray();
+            mPhysicalRows.Add(row);
         }
 
-        public IEnumerable<string> CommentDeleted
+        public IEnumerable<string> PhysicalRows()
         {
-            get
-            {
-                return PhysicalRows( LogicalRows(source).Select(p => DeleteComment2(p)));
-            }
+            return mPhysicalRows;
+        }
+
+        public int Count
+        {
+            get { return mPhysicalRows.Count(); }
+        }
+
+        public IEnumerable<string> AliveCode()
+        {
+            return DeleteComment2(mPhysicalRows);
         }
 
         private static string DeleteComment(string s)
@@ -63,14 +70,38 @@ namespace CommentDeleteForVB6
             }
         }
 
-        public IEnumerable<List<string>> LogicalRows()
+    }
+
+    public class VB6Source
+    {
+        private readonly string[] source;
+
+        public VB6Source(string path)
+        {
+            this.source = File.ReadAllLines(path, Encoding.Default);
+        }
+
+        public VB6Source(IEnumerable<string> source)
+        {
+            this.source = source.ToArray();
+        }
+
+        public IEnumerable<string> CommentDeleted
+        {
+            get
+            {
+                return PhysicalRows(LogicalRows(source));
+            }
+        }
+
+        public IEnumerable<VB6LogicalRow> LogicalRows()
         {
             return LogicalRows(source);
         }
 
-        private static IEnumerable<List<string>> LogicalRows(IEnumerable<string> s)
+        private static IEnumerable<VB6LogicalRow> LogicalRows(IEnumerable<string> s)
         {
-            var v = new List<string>();
+            var v = new VB6LogicalRow();
 
             foreach (var sss in s)
             {
@@ -78,7 +109,7 @@ namespace CommentDeleteForVB6
                 {
                     v.Add(sss);
                     yield return v;
-                    v = new List<string>();
+                    v = new VB6LogicalRow();
                     continue;
                 }
 
@@ -89,13 +120,11 @@ namespace CommentDeleteForVB6
                 yield return v;
         }
 
-        private static IEnumerable<string> PhysicalRows(IEnumerable<IEnumerable<string>> s)
+        private static IEnumerable<string> PhysicalRows(IEnumerable<VB6LogicalRow> s)
         {
             foreach (var logicalrow in s)
-            {
-                foreach (var physicalrow in logicalrow)
+                foreach (var physicalrow in logicalrow.AliveCode())
                     yield return physicalrow;
-            }
         }
     }
 }

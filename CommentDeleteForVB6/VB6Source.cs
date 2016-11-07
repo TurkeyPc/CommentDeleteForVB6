@@ -5,51 +5,47 @@ using System.Text;
 
 namespace CommentDeleteForVB6
 {
-    public class VB6LogicalRow
+
+    public class VB6PhysicalRow
     {
-        private List<string> mPhysicalRows;
+        private readonly string m;
         private const string ContinueString = " _";
 
-        public VB6LogicalRow()
+        public VB6PhysicalRow(string p)
         {
-            mPhysicalRows = new List<string>();
+            m = p;
         }
 
-        public void Add(string row)
-        {
-            mPhysicalRows.Add(row);
-        }
-
-        public IEnumerable<string> PhysicalRows()
-        {
-            return mPhysicalRows;
-        }
-
-        public int Count
-        {
-            get { return mPhysicalRows.Count(); }
-        }
-
-        public bool CanAddRow
+        public bool IsContinueRow
         {
             get
             {
-                if (Count == 0) return true;
-                return IsContinueRow(GetLastItem(mPhysicalRows));
+                if (m.Length < ContinueString.Length) return false;
+
+                var s = new string(m.Reverse().Take(ContinueString.Length).Reverse().ToArray());
+                return s == ContinueString;
             }
         }
 
-        private bool IsContinueRow(string p)
+        public string FactValue
         {
-            if (p.Length < ContinueString.Length) return false;
-
-            var s = new string(p.Reverse().Take(ContinueString.Length).Reverse().ToArray());
-            return s == ContinueString;
+            get
+            {
+                return m;
+            }
         }
 
-        public string GetLastItem(IEnumerable<string> p)
+        public string EssenceValue
         {
-            return p.Reverse().FirstOrDefault();
+            get
+            {
+                var c = DeleteComment;
+
+                if (IsContinueRow)
+                    return "";
+                else
+                    return CutLast(m, ContinueString.Length);
+            }
         }
 
         private string CutLast(string p,int v)
@@ -59,9 +55,79 @@ namespace CommentDeleteForVB6
             return p.Substring(0, p.Length - v);
         }
 
+        public string DeleteComment
+        {
+            get
+            {
+                var c = m.IndexOf("'");
+
+                if (c == -1)
+                    return m;
+
+                if (m.IndexOf("\"") == -1)
+                    return m.Substring(0, c);
+
+                bool InString = false;
+
+                for (int i = 0; i < m.Length; i++)
+                {
+                    if (m[i] == '"')
+                        InString = !InString;
+
+                    if (!InString && m[i] == '\'')
+                        return m.Substring(0, i);
+                }
+
+                return m;
+            }
+        }
+    }
+
+    public class VB6LogicalRow
+    {
+        private List<VB6PhysicalRow> mPhysicals;
+
+        public VB6LogicalRow()
+        {
+            mPhysicals = new List<VB6PhysicalRow>();
+        }
+
+        public void Add(string row)
+        {
+            mPhysicals.Add(new VB6PhysicalRow(row));
+        }
+
+        public int Count
+        {
+            get
+            {
+                return mPhysicals.Count();
+            }
+        }
+
+        public bool CanAddRow
+        {
+            get
+            {
+                VB6PhysicalRow r = null;
+                foreach (var item in mPhysicals)
+                    r = item;
+
+                if (r == null)
+                    return true;
+
+                return r.IsContinueRow;
+            }
+        }
+
+        public string GetLastItem(IEnumerable<string> p)
+        {
+            return p.Reverse().FirstOrDefault();
+        }
+
         public IEnumerable<string> AliveCode()
         {
-            var vvv = DeleteComment2(mPhysicalRows).ToList();
+            var vvv = DeleteComment2().ToList();
 
             if (vvv.Count >= 1)
                 if (GetLastItem(vvv).Trim() == "")
@@ -69,50 +135,25 @@ namespace CommentDeleteForVB6
 
             if (vvv.Count >= 1)
             {
-                if (IsContinueRow(GetLastItem(vvv)))
+                var a = new VB6PhysicalRow(GetLastItem(vvv));
+
+                if (a.IsContinueRow)
                 {
                     var lastindex = vvv.Count - 1;
-                    vvv[lastindex] = CutLast(vvv[lastindex], 2);
+                    vvv[lastindex] = a.EssenceValue;
                 }
             }
 
             return vvv;
         }
 
-        private static IEnumerable<string> DeleteComment2(IEnumerable<string> s)
+        private IEnumerable<string> DeleteComment2()
         {
-            var v = new List<string>(s);
-
-            foreach (var vvv in s)
+            foreach (var vvv in mPhysicals)
             {
-                var t = DeleteComment(vvv);
-                yield return t;
-                if (t != vvv) yield break;
+                yield return vvv.DeleteComment;
+                if (vvv.DeleteComment != vvv.FactValue) yield break;
             }
-        }
-
-        private static string DeleteComment(string s)
-        {
-            var c = s.IndexOf("'");
-
-            if (c == -1)
-                return s;
-
-            if (s.IndexOf("\"") == -1)
-                return s.Substring(0, c);
-
-            bool InString = false;
-
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (s[i] == '"')
-                    InString = !InString;
-
-                if (!InString && s[i] == '\'')
-                    return s.Substring(0, i);
-            }
-
-            return s;
         }
     }
 

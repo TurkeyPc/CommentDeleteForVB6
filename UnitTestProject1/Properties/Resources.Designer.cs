@@ -61,42 +61,20 @@ namespace UnitTestProject1.Properties {
         }
         
         /// <summary>
-        ///   Dim s As _
-        ///String に類似しているローカライズされた文字列を検索します。
+        ///   s = &quot;---I&apos;m a student.---&quot; に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TestMehtod5InputValue {
+        internal static string TestCommentMarkInStringInputValue {
             get {
-                return ResourceManager.GetString("TestMehtod5InputValue", resourceCulture);
+                return ResourceManager.GetString("TestCommentMarkInStringInputValue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Dim s As _
-        ///String  に類似しているローカライズされた文字列を検索します。
+        ///   s = &quot;---&quot;&quot;I&apos;m a student.&quot;&quot;---&quot; に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TestMehtod6ExpectedValue {
+        internal static string TestCommentMarkInStringWithDoubleQuoteInputValue {
             get {
-                return ResourceManager.GetString("TestMehtod6ExpectedValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Dim s As _
-        ///String &apos;s Is String に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TestMehtod6InputValue {
-            get {
-                return ResourceManager.GetString("TestMehtod6InputValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   &apos;Dim s As _
-        ///String に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TestMehtod7InputValue {
-            get {
-                return ResourceManager.GetString("TestMehtod7InputValue", resourceCulture);
+                return ResourceManager.GetString("TestCommentMarkInStringWithDoubleQuoteInputValue", resourceCulture);
             }
         }
         
@@ -105,74 +83,9 @@ namespace UnitTestProject1.Properties {
         ///String &apos;s Is String _
         ///s = &quot;New Value&quot; に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TestMehtod8InputValue {
+        internal static string TestMultiLineWithCenterCommentInputValue {
             get {
-                return ResourceManager.GetString("TestMehtod8InputValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   s = &quot;---I&apos;m a student.---&quot; に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TestMethod3ExpectedValue {
-            get {
-                return ResourceManager.GetString("TestMethod3ExpectedValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   s = &quot;---I&apos;m a student.---&quot; に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TestMethod3InputValue {
-            get {
-                return ResourceManager.GetString("TestMethod3InputValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   s = &quot;---&quot;&quot;I&apos;m a student.&quot;&quot;---&quot; に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TestMethod4ExpectedValue {
-            get {
-                return ResourceManager.GetString("TestMethod4ExpectedValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   s = &quot;---&quot;&quot;I&apos;m a student.&quot;&quot;---&quot; に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TestMethod4InputValue {
-            get {
-                return ResourceManager.GetString("TestMethod4InputValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Private Sub Form_Load()
-        ///
-        ///&apos;Dim s As Integer _
-        ///Dim v As Variant
-        ///
-        ///End Sub に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TestMethod9InputValue {
-            get {
-                return ResourceManager.GetString("TestMethod9InputValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Private Sub Form_Load()
-        ///
-        ///&apos;Dim s As Integer _
-        ///
-        ///Dim v As Variant
-        ///
-        ///End Sub に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string TestMethodAInputValue {
-            get {
-                return ResourceManager.GetString("TestMethodAInputValue", resourceCulture);
+                return ResourceManager.GetString("TestMultiLineWithCenterCommentInputValue", resourceCulture);
             }
         }
     }

@@ -12,9 +12,14 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestEndSideComment()
         {
-            var target = new VB6Source(new string[] { "Dim v As Integer 'v is Integer" });
+            var s1 = new List<string>();
+            s1.Add("Dim v As Integer 'v is Integer");
+
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
-            var expected = new[] { "Dim v As Integer " };
+
+            var expected = new List<string>();
+            expected.Add("Dim v As Integer ");
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -22,8 +27,12 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestStartSideComment()
         {
-            var target = new VB6Source(new string[] { "'    'Dim v As Integer 'v is Integer"});
+            var s1 = new List<string>();
+            s1.Add("'    'Dim v As Integer 'v is Integer");
+
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
+
             var expected = new string[0];
 
             CollectionAssert.AreEqual(expected, actual);
@@ -32,14 +41,15 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestCommentMarkInString()
         {
-            var s1 = Properties.Resources.TestMethod3InputValue;
+            var s1 = spliter(Properties.Resources.TestCommentMarkInStringInputValue);
             /* Value of s1 is
             s = "---I'm a student.---"
             */
 
-            var target = new VB6Source(new string[] { s1 });
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
-            var expected = new[] { s1 };
+
+            var expected = new List<string>(s1);
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -47,14 +57,15 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestCommentMarkInStringWithDoubleQuote()
         {
-            var s1 = Properties.Resources.TestMethod4InputValue;
+            var s1 = spliter(Properties.Resources.TestCommentMarkInStringWithDoubleQuoteInputValue);
             /* Value of s1 is
             s = "---""I'm a student.""---"
             */
 
-            var target = new VB6Source(new string[] { s1 });
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
-            var expected = new[] { s1 };
+
+            var expected = new List<string>(s1);
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -62,15 +73,14 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMultiLineWithoutComment()
         {
-            var s1 = Properties.Resources.TestMehtod5InputValue;
-            /* Value of s1 is
-            Dim s As _
-            String
-            */
+            var s1 = new List<string>();
+            s1.Add("Dim s As _");
+            s1.Add("String");
 
-            var target = new VB6Source(s1.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
-            var expected = s1.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var expected = new List<string>(s1);
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -78,21 +88,16 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMultiLineWithEndComment()
         {
-            var s1 = Properties.Resources.TestMehtod6InputValue;
-            /* Value of s1 is
-            Dim s As _
-            String 's Is String
-            */
+            var s1 = new List<string>();
+            s1.Add("Dim s As _");
+            s1.Add("String 's Is String");
 
-            var s2 = Properties.Resources.TestMehtod6ExpectedValue;
-            /* Value of s1 is
-            Dim s As _
-            String 
-            */
-
-            var target = new VB6Source(s1.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
-            var expected = s2.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var expected = new List<string>();
+            expected.Add("Dim s As _");
+            expected.Add("String ");
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -100,38 +105,39 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestMultiLineWithStartComment()
         {
-            var s1 = Properties.Resources.TestMehtod7InputValue;
-            /* Value of s1 is
-            'Dim s As _
-            String
-            */
+            var s1 = new List<string>();
+            s1.Add("'Dim s As _");
+            s1.Add("String");
 
-            var target = new VB6Source(s1.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
-            var expected = new string[0];
+
+            var expected = new List<string>();
 
             CollectionAssert.AreEqual(expected, actual);
+        }
+
+        private string[] spliter(string p)
+        {
+            return p.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
         }
 
         [TestMethod]
         public void TestMultiLineWithCenterComment()
         {
-            var s1 = Properties.Resources.TestMehtod8InputValue;
+            var s1 = spliter(Properties.Resources.TestMultiLineWithCenterCommentInputValue);
             /* Value of s1 is
             Dim s As _
             String 's Is String _
             s = "New Value"
             */
 
-            var s2 = Properties.Resources.TestMehtod6ExpectedValue; //expected is same as TestMultiLineWithEndComment
-            /* Value of s1 is
-            Dim s As _
-            String 
-            */
-
-            var target = new VB6Source(s1.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
-            var expected = s2.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+            var expected = new List<string>();
+            expected.Add("Dim s As _");
+            expected.Add("String ");
 
             CollectionAssert.AreEqual(expected, actual);
         }
@@ -139,18 +145,17 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestRealVB6Method1()
         {
-            var s1 = Properties.Resources.TestMethod9InputValue;
-            /* Value of s1 is
-            Private Sub Form_Load()
+            var s1 = new List<string>();
+            s1.Add("Private Sub Form_Load()");
+            s1.Add("");
+            s1.Add("'Dim s As Integer _");
+            s1.Add("Dim v As Variant");
+            s1.Add("");
+            s1.Add("End Sub");
 
-            'Dim s As Integer _
-            Dim v As Variant
-
-            End Sub
-            */
-
-            var target = new VB6Source(s1.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
+
             var expected = new List<string>();
             expected.Add("Private Sub Form_Load()");
             expected.Add("End Sub");
@@ -161,19 +166,18 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestRealVB6Method2()
         {
-            var s1 = Properties.Resources.TestMethodAInputValue;
-            /* Value of s1 is
-            Private Sub Form_Load()
+            var s1 = new List<string>();
+            s1.Add("Private Sub Form_Load()");
+            s1.Add("");
+            s1.Add("'Dim s As Integer _");
+            s1.Add("");
+            s1.Add("Dim v As Variant");
+            s1.Add("");
+            s1.Add("End Sub");
 
-            'Dim s As Integer _
-
-            Dim v As Variant
-
-            End Sub
-            */
-
-            var target = new VB6Source(s1.Split(new[] { Environment.NewLine }, StringSplitOptions.None));
+            var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
+
             var expected = new List<string>();
             expected.Add("Private Sub Form_Load()");
             expected.Add("Dim v As Variant");
@@ -193,6 +197,7 @@ namespace UnitTestProject1
 
             var target = new VB6Source(s1);
             var actual = target.CommentDeleted.ToArray();
+
             var expected = new List<string>();
             expected.Add("For i = 0 To 10");
             expected.Add("    Debug.Print CStr(i) ");

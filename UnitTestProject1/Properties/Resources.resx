@@ -117,54 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="TestMehtod5InputValue" xml:space="preserve">
-    <value>Dim s As _
-String</value>
+  <data name="TestCommentMarkInStringInputValue" xml:space="preserve">
+    <value>s = "---I'm a student.---"</value>
   </data>
-  <data name="TestMehtod6ExpectedValue" xml:space="preserve">
-    <value>Dim s As _
-String </value>
+  <data name="TestCommentMarkInStringWithDoubleQuoteInputValue" xml:space="preserve">
+    <value>s = "---""I'm a student.""---"</value>
   </data>
-  <data name="TestMehtod6InputValue" xml:space="preserve">
-    <value>Dim s As _
-String 's Is String</value>
-  </data>
-  <data name="TestMehtod7InputValue" xml:space="preserve">
-    <value>'Dim s As _
-String</value>
-  </data>
-  <data name="TestMehtod8InputValue" xml:space="preserve">
+  <data name="TestMultiLineWithCenterCommentInputValue" xml:space="preserve">
     <value>Dim s As _
 String 's Is String _
 s = "New Value"</value>
-  </data>
-  <data name="TestMethod3ExpectedValue" xml:space="preserve">
-    <value>s = "---I'm a student.---"</value>
-  </data>
-  <data name="TestMethod3InputValue" xml:space="preserve">
-    <value>s = "---I'm a student.---"</value>
-  </data>
-  <data name="TestMethod4ExpectedValue" xml:space="preserve">
-    <value>s = "---""I'm a student.""---"</value>
-  </data>
-  <data name="TestMethod4InputValue" xml:space="preserve">
-    <value>s = "---""I'm a student.""---"</value>
-  </data>
-  <data name="TestMethod9InputValue" xml:space="preserve">
-    <value>Private Sub Form_Load()
-
-'Dim s As Integer _
-Dim v As Variant
-
-End Sub</value>
-  </data>
-  <data name="TestMethodAInputValue" xml:space="preserve">
-    <value>Private Sub Form_Load()
-
-'Dim s As Integer _
-
-Dim v As Variant
-
-End Sub</value>
   </data>
 </root>

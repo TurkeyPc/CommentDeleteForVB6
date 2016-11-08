@@ -8,30 +8,23 @@ namespace CommentDeleteForVB6
 
     public class VB6PhysicalRow
     {
-        private readonly string m;
+        public readonly string FactValue;
+
         private const string ContinueString = " _";
 
         public VB6PhysicalRow(string p)
         {
-            m = p;
+            FactValue = p;
         }
 
         public bool IsContinueRow
         {
             get
             {
-                if (m.Length < ContinueString.Length) return false;
+                if (FactValue.Length < ContinueString.Length) return false;
 
-                var s = new string(m.Reverse().Take(ContinueString.Length).Reverse().ToArray());
+                var s = new string(FactValue.Reverse().Take(ContinueString.Length).Reverse().ToArray());
                 return s == ContinueString;
-            }
-        }
-
-        public string FactValue
-        {
-            get
-            {
-                return m;
             }
         }
 
@@ -39,12 +32,13 @@ namespace CommentDeleteForVB6
         {
             get
             {
-                var c = DeleteComment;
+                if (DeleteComment != FactValue)
+                    return DeleteComment;
 
                 if (IsContinueRow)
-                    return "";
-                else
-                    return CutLast(m, ContinueString.Length);
+                    return CutLast(FactValue, ContinueString.Length);
+
+                return FactValue;
             }
         }
 
@@ -59,26 +53,18 @@ namespace CommentDeleteForVB6
         {
             get
             {
-                var c = m.IndexOf("'");
-
-                if (c == -1)
-                    return m;
-
-                if (m.IndexOf("\"") == -1)
-                    return m.Substring(0, c);
-
                 bool InString = false;
 
-                for (int i = 0; i < m.Length; i++)
+                for (int i = 0; i < FactValue.Length; i++)
                 {
-                    if (m[i] == '"')
+                    if (FactValue[i] == '"')
                         InString = !InString;
 
-                    if (!InString && m[i] == '\'')
-                        return m.Substring(0, i);
+                    if (!InString && FactValue[i] == '\'')
+                        return FactValue.Substring(0, i);
                 }
 
-                return m;
+                return FactValue;
             }
         }
     }
@@ -109,9 +95,7 @@ namespace CommentDeleteForVB6
         {
             get
             {
-                VB6PhysicalRow r = null;
-                foreach (var item in mPhysicals)
-                    r = item;
+                var r = mPhysicals.Reverse<VB6PhysicalRow>().FirstOrDefault();
 
                 if (r == null)
                     return true;
@@ -127,7 +111,7 @@ namespace CommentDeleteForVB6
 
         public IEnumerable<string> AliveCode()
         {
-            var vvv = DeleteComment2().ToList();
+            var vvv = DeleteComment().ToList();
 
             if (vvv.Count >= 1)
                 if (GetLastItem(vvv).Trim() == "")
@@ -147,7 +131,7 @@ namespace CommentDeleteForVB6
             return vvv;
         }
 
-        private IEnumerable<string> DeleteComment2()
+        private IEnumerable<string> DeleteComment()
         {
             foreach (var vvv in mPhysicals)
             {
@@ -155,6 +139,7 @@ namespace CommentDeleteForVB6
                 if (vvv.DeleteComment != vvv.FactValue) yield break;
             }
         }
+
     }
 
     public class VB6Source
